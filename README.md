@@ -1,4 +1,45 @@
-splunk_logger
-=============
+# SplunkLogger
 
-a lightweight wrapper around Logger to optimize Splunk queries
+A lightweight wrapper around Logger to optimize Splunk queries
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'splunk_logger'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install splunk_logger
+
+## Usage
+No configuration is required. In your code, replace `logger.debug` with 
+`SplunkLogger::Logger.debug`. SplunkLogger::Logger will call #debug on the first of 
+Rails.logger, App::Logger, or Logger.new. 
+
+To force SplunkLogger to write to a different logger: 
+
+    MyLogger = Logger.new(_file_)
+    SplunkLogger::Logger.logger = MyLogger
+    
+
+SplunkLogger::Logger responds to all of the standard Logger methods plus `#trace`. 
+The first argument is should be a unique keyword to identify the event. Additional
+arguments are converted to key/value pairs to enable automatic variable creation in 
+Splunk (e.g.: job_status_id="435432" err_msg="Missing mandatory field X")
+
+
+    SplunkLogger::Logger.error('ERROR_CODE', 'foo' )
+    SplunkLogger::Logger.error('ERROR_CODE', 'foo', 'bar', 'baz', 'qux' )
+    SplunkLogger::Logger.error('ERROR_CODE', ['foo', 'bar', 'baz', 'qux'] )
+
+Use trace to log lines of a backtrace from an exception e.g.
+
+    rescue => err
+      SplunkLogger::Logger.trace(err, err.backtrace[0..5])
+
+For further discussion see https://wiki.mywestfield.com/display/DBGDEV/Logging
