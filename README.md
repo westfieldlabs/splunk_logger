@@ -8,14 +8,6 @@ Add this line to your application's Gemfile:
 
     gem 'splunk_logger'
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install splunk_logger
-
 ## Usage
 No configuration is required. In your code, replace `logger.debug` with 
 `SplunkLogger::Logger.debug`. SplunkLogger::Logger will call #debug on the first of 
@@ -28,10 +20,9 @@ To force SplunkLogger to write to a different logger:
     
 
 SplunkLogger::Logger responds to all of the standard Logger methods plus `#trace`. 
-The first argument is should be a unique keyword to identify the event. Additional
+The first argument should be a unique keyword to identify the event. Additional
 arguments are converted to key/value pairs to enable automatic variable creation in 
 Splunk (e.g.: job_status_id="435432" err_msg="Missing mandatory field X")
-
 
     SplunkLogger::Logger.error('ERROR_CODE', 'foo' )
     SplunkLogger::Logger.error('ERROR_CODE', 'foo', 'bar', 'baz', 'qux' )
