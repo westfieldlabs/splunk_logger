@@ -32,5 +32,3 @@ Use trace to log lines of a backtrace from an exception e.g.
 
     rescue => err
       SplunkLogger::Logger.trace(err, err.backtrace[0..5])
-
-For further discussion see https://wiki.mywestfield.com/display/DBGDEV/Logging
