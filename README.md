@@ -6,7 +6,7 @@ A lightweight wrapper around Logger to optimize Splunk queries
 
 Add this line to your application's Gemfile:
 
-    gem 'splunk_logger'
+    gem 'splunk_logger', git: 'https://github.com/westfield/splunk_logger.git'
 
 ## Usage
 No configuration is required. In your code, replace `logger.debug` with 
@@ -28,7 +28,7 @@ Splunk (e.g.: job_status_id="435432" err_msg="Missing mandatory field X")
 
 The last example would generate a log entry including `EventCode foo="bar" baz=""`
     
-Use trace to log lines of a backtrace from an exception e.g.
+Use `#trace` to log lines of a backtrace from an exception e.g.
 
     rescue => err
       SplunkLogger::Logger.trace(err, err.backtrace[0..5])
