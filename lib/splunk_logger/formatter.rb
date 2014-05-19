@@ -3,8 +3,8 @@ module SplunkLogger
 
     KeyRegex = Regexp.new('\W')
   
-    def message(error_code, *args)
-      ([error_code] + to_pairs(message_data(args))).join(" ")
+    def message(error_code, hash)
+      ([error_code] + to_pairs(message_data(hash))).join(" ")
     end
 
     protected # implementation of protected class methods thanks http://blog.jayfields.com/2006/11/ruby-protected-class-methods.html
@@ -13,10 +13,10 @@ module SplunkLogger
       (args[0].is_a?(Array) ? args.shift : args)
     end
 
-    def to_pairs(arr)
-      (0...arr.size()).step(2).map { |e|
-      "#{arr[e].to_s.gsub(KeyRegex, '_')}=\"#{arr[e+1]}\"" # underscore keys, quote values
-      }
+    def to_pairs(hash)
+      hash.map do |key, value|
+        "#{key.to_s.gsub(KeyRegex, '_')}=\"#{value}\""
+      end
     end
 
   end

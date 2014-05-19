@@ -19,14 +19,11 @@ To force SplunkLogger to write to a different logger:
     SplunkLogger::Logger.logger = MyLogger
     
 SplunkLogger::Logger responds to all of the standard Logger methods plus `#trace`. 
-The first argument should be a unique keyword to identify the event. Additional
-arguments are converted to key/value pairs to enable automatic variable creation in 
-Splunk (e.g.: job_status_id="435432" err_msg="Missing mandatory field X")
+The first argument should be a unique keyword to identify the event. The second
+argument should be key-value pairs in a hash, e.g.:
 
-    SplunkLogger::Logger.error('EventCode', 'foo', 'bar' )
-    SplunkLogger::Logger.error('EventCode', 'foo', 'bar', 'baz' )
-
-The last example would generate a log entry including `EventCode foo="bar" baz=""`
+    SplunkLogger::Logger.error('EventCode', {'foo': 'bar'} )
+    SplunkLogger::Logger.error('EventCode',  {'job_status_id': '45', 'err_msg':'Missing mandatory field X'})
     
 Use `#trace` to log lines of a backtrace from an exception e.g.
 

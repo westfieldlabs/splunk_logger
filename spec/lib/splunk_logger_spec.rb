@@ -68,27 +68,15 @@ describe SplunkLogger do
   end
   
   describe "argument formats" do
-  
-    it "works with a missing value" do
-      subject.message(
-        'ERROR_CODE', :key_symbol1
-      ).should == 'ERROR_CODE key_symbol1=""'
-    end
     
     describe "message" do
 
       it "works" do
         subject.message(
-          'ERROR_CODE', :key_symbol1, 'value 1', 'key string2', 'value 2'
+          'ERROR_CODE', {:key_symbol1 => 'value 1', 'key string2' => 'value 2'}
         ).should == %Q{ERROR_CODE key_symbol1="value 1" key_string2="value 2"}
       end
-    
-      it "works with array key/values" do
-        subject.message(
-          'ERROR_CODE', [:key_symbol1, 'value 1', 'key string2', 'value 2']
-        ).should == %Q{ERROR_CODE key_symbol1="value 1" key_string2="value 2"}
-      end
-    
+
     end
 
     describe "trace" do
